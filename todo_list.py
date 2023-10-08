@@ -7,11 +7,6 @@ task_dict_model = {
 
 DATABANK = r"taskData/todo.txt"
 
-def get_tasks_from_databank(databank):
-    print("Getting tasks from databank: " + databank)
-    with open(databank) as db:    
-        tasks = db.read()
-        print(tasks)
 
 def update_databank(file, updated_tasks):
     print("Updating tasks in databank")
