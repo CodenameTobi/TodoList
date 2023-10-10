@@ -1,14 +1,16 @@
 
 DATABANK = r"taskData/todo.txt"
 
-def clear_databank(databank):
-    open(databank, 'w').close()        
+def clear_empty(databank):
+    with open(databank, 'r') as db:
+        if db.read() == "Empty":
+            open(databank, 'w').close()        
 
 def add_task(databank):
-    clear_databank(databank)
+    clear_empty(databank)
     name, description, due_date = get_task_from_user()
     with open(databank, 'a') as db:
-        db.write("\n" + "-" * 100 + "\n")
+        db.write("-" * 100 + "\n")
         db.write("Name:\t\t" + name + "\n")
         db.write("Description:\n\t\t" + description + "\n")
         db.write("Due Date:\t" + due_date + "\n")
@@ -26,22 +28,28 @@ def get_task_from_user():
 def display_tasks(databank):
     with open(databank) as db:
         display_tasks = db.read()
-        print(display_tasks) 
+        print("\n" + display_tasks) 
 
 def complete_task():
     # TODO: maybe
-    print("Task completed")
+    print("\nTask completed")
 
 
 def delete_task(task):
     # TODO
-    print("Delete Task")
+    print("\nDelete Task")
 
 def delete_all(databank):
     # all tasks in the databank are deleted
-    print("Deleting all tasks out of " + databank + "\n")
-    with open(databank, 'w') as db:
-        db.write("Empty")
+    choice = input("Are you sure you want to delete the contents of " + databank + "?\n[Y/N]: ")
+    while choice != "Y" and choice != "N":
+        choice = input("[Y/N]: ")
+    
+    if choice == "Y":
+        with open(databank, 'w') as db:
+            db.write("Empty")
+    else:
+        print("Wise choice!\n")
 
 def menu():
     # this function handles the user interaction
@@ -64,10 +72,11 @@ def menu():
 
 
 def main():
-    # tasks = get_tasks_from_databank(r"taskData/todo.txt")
     exit = True
     while exit != 0:
+        print()
         exit = menu()
+        print()
         if exit == 0:
             continue
         elif exit == 1:
